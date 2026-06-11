@@ -3,10 +3,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
-import morgan from "morgan";
-import { errorHandler } from "./middlewares/error.handler.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
 import { mongoSanitizer } from "./middlewares/mongoSanitize.js";
-import { globalLimiter } from "./middlewares/rate.lmiters.js";
+import { morganConfig } from "./middlewares/morgan.js";
+import { globalLimiter } from "./middlewares/rateLimiter.js";
 import routes from "./routes/index.js";
 import ApiResponse from "./utils/ApiResponse.js";
 
@@ -15,7 +15,7 @@ export const app = express();
 /* ------------------- Security and configuration packages ------------------ */
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(helmet());
-app.use(morgan("dev"));
+app.use(morganConfig);
 app.use(compression());
 app.use(cookieParser());
 app.use(mongoSanitizer);
